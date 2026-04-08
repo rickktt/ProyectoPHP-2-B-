@@ -1,0 +1,265 @@
+/* ============================================================
+   custom.css — Farmacia SV · Modo Oscuro
+   Incluir DESPUÉS de Bootstrap en navbar.php:
+   <link rel="stylesheet" href="custom.css">
+   ============================================================ */
+
+/* ── Base ─────────────────────────────────────────────────── */
+body {
+  background-color: #0f1117 !important;
+  color: #e2e8f0 !important;
+}
+
+/* ── Navbar ───────────────────────────────────────────────── */
+.navbar.bg-dark {
+  background-color: #1a1d2e !important;
+  border-bottom: 1px solid #2d3155;
+  box-shadow: none;
+}
+
+.navbar-brand {
+  color: #7c8dfc !important;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.nav-link {
+  color: #94a3b8 !important;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+  padding: 6px 12px !important;
+}
+
+.nav-link:hover {
+  background: #2d3155;
+  color: #e2e8f0 !important;
+}
+
+/* ── Contenedor general ───────────────────────────────────── */
+.container {
+  padding-top: 8px;
+}
+
+/* ── Cards (login, nuevo registro, editar) ────────────────── */
+.card {
+  background-color: #151825 !important;
+  border: 1px solid #2d3155 !important;
+  border-radius: 10px !important;
+}
+
+.card-body {
+  padding: 1.75rem !important;
+}
+
+.card h3 {
+  color: #e2e8f0;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+/* ── Formularios ──────────────────────────────────────────── */
+.form-label {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.form-control,
+.form-select {
+  background-color: #1e2235 !important;
+  border: 1px solid #2d3155 !important;
+  color: #e2e8f0 !important;
+  border-radius: 7px !important;
+  font-size: 14px;
+  transition: border-color 0.15s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: #252840 !important;
+  border-color: #4f5fc4 !important;
+  box-shadow: 0 0 0 3px rgba(79, 95, 196, 0.15) !important;
+  color: #f1f5f9 !important;
+}
+
+.form-control::placeholder {
+  color: #4a5568;
+}
+
+/* ── Tabla ────────────────────────────────────────────────── */
+.table-bordered,
+.table-striped {
+  border-color: #2d3155 !important;
+}
+
+.table {
+  color: #cbd5e1 !important;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Hack para border-radius en tabla */
+.table-responsive,
+div:has(> .table) {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #2d3155;
+}
+
+.table thead.table-dark th,
+.table-dark th {
+  background-color: #1a1d2e !important;
+  color: #94a3b8 !important;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-color: #2d3155 !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: #151825 !important;
+  color: #cbd5e1;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) > * {
+  background-color: #131621 !important;
+  color: #cbd5e1;
+}
+
+.table > tbody > tr:hover > * {
+  background-color: #1e2235 !important;
+  color: #e2e8f0 !important;
+}
+
+.table td,
+.table th {
+  border-color: #1e2235 !important;
+  padding: 10px 14px !important;
+  vertical-align: middle;
+}
+
+/* ID con color de acento */
+.table td:first-child {
+  color: #7c8dfc;
+  font-weight: 500;
+}
+
+/* ── Botones ──────────────────────────────────────────────── */
+.btn {
+  border-radius: 7px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: all 0.15s !important;
+  border: none !important;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background-color: #4f5fc4 !important;
+  color: #fff !important;
+}
+.btn-primary:hover {
+  background-color: #6370d4 !important;
+}
+
+.btn-success {
+  background-color: #16a34a !important;
+  color: #fff !important;
+}
+.btn-success:hover {
+  background-color: #22c55e !important;
+}
+
+.btn-secondary {
+  background-color: #334155 !important;
+  color: #cbd5e1 !important;
+}
+.btn-secondary:hover {
+  background-color: #475569 !important;
+}
+
+.btn-warning {
+  background-color: #d97706 !important;
+  color: #fff !important;
+}
+.btn-warning:hover {
+  background-color: #f59e0b !important;
+}
+
+.btn-danger {
+  background-color: #dc2626 !important;
+  color: #fff !important;
+}
+.btn-danger:hover {
+  background-color: #ef4444 !important;
+}
+
+/* ── Alertas / Feedback ───────────────────────────────────── */
+.alert {
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  border: none !important;
+  border-left: 3px solid !important;
+}
+
+.alert-success {
+  background-color: rgba(22, 163, 74, 0.12) !important;
+  border-left-color: #22c55e !important;
+  color: #86efac !important;
+}
+
+.alert-danger {
+  background-color: rgba(220, 38, 38, 0.12) !important;
+  border-left-color: #ef4444 !important;
+  color: #fca5a5 !important;
+}
+
+.alert-warning {
+  background-color: rgba(217, 119, 6, 0.12) !important;
+  border-left-color: #f59e0b !important;
+  color: #fcd34d !important;
+}
+
+/* ── Links ────────────────────────────────────────────────── */
+a {
+  color: #7c8dfc;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+a:hover {
+  color: #a5b4fc;
+}
+
+/* ── Texto muted ──────────────────────────────────────────── */
+.text-muted,
+.text-secondary {
+  color: #64748b !important;
+}
+
+/* ── Página de título + botón "nuevo" ─────────────────────── */
+h2.mb-0 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #e2e8f0;
+}
+
+/* ── Scrollbar personalizado (Chrome/Edge) ────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f1117;
+}
+::-webkit-scrollbar-thumb {
+  background: #2d3155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4f5fc4;
+}
