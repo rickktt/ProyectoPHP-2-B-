@@ -1,70 +1,67 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gestión de Estudiantes</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-  <div class="container">
-    <a class="navbar-brand" href="listar_estudiantes.php">Sistema Estudiantes</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ms-auto">
-        <?php if (isset($_SESSION['usuario'])): ?>
-          <li class="nav-item"><a class="nav-link" href="listar_estudiantes.php">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="logout.php">Cerrar sesión</a></li>
-        <?php else: ?>
-          <li class="nav-item"><a class="nav-link" href="login.php">Iniciar sesión</a></li>
-          <li class="nav-item"><a class="nav-link" href="registro_usuario.php">Registrarse</a></li>
-        <?php endif; ?>
-      </ul>
-    </div>
-  </div>
-</nav>
-<?php include("conexion.php"); ?>
-<div class="card mx-auto" style="max-width: 400px;">
-  <div class="card-body">
-    <h3 class="text-center">Registro de Usuario</h3>
-    <form method="POST">
-      <div class="mb-3">
-        <label>Nombre de usuario</label>
-        <input type="text" name="nombre_usuario" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label>Contraseña</label>
-        <input type="password" name="contrasena" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label>Rol</label>
-        <select name="rol" class="form-control" required>
-          <option value="usuario">Usuario (Lectura)</option>
-          <option value="admin">Administrador (Acceso Total)</option>
-        </select>
-      </div>
-      <button type="submit" name="registrar" class="btn btn-primary w-100">Registrar</button>
-    </form>
-    <div class="text-center mt-3">
-      <a href="login.php">¿Ya tienes cuenta? Inicia sesión</a>
-    </div>
-  </div>
-</div>
 <?php
-if (isset($_POST['registrar'])) {
-    $usuario = $_POST['nombre_usuario'];
-    $password = password_hash($_POST['contrasena'], PASSWORD_BCRYPT);
-    $rol = $_POST['rol'];
+session_start();
+include("conexion.php");
 
-    $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, rol) VALUES ('$usuario', '$password', '$rol')";
-    if ($conexion->query($sql)) {
-        echo "<div class='alert alert-success mt-3 text-center'>Usuario registrado correctamente como $rol</div>";
+$mensaje = "";
+$tipo = "";
+
+if (isset($_POST['registrar'])) {
+    $usuario = trim($_POST['nombre_usuario']);
+    $password = password_hash($_POST['contrasena'], PASSWORD_BCRYPT);
+    $rol = $_POST['rol']; // intencional para propósitos educativos
+
+    // Verificar si el usuario ya existe
+    $check = $conexion->prepare("SELECT id FROM usuarios WHERE nombre_usuario = ?");
+    $check->bind_param("s", $usuario);
+    $check->execute();
+    $check->store_result();
+
+    if ($check->num_rows > 0) {
+        $mensaje = "Ese nombre de usuario ya está en uso.";
+        $tipo = "danger";
     } else {
-        echo "<div class='alert alert-danger mt-3 text-center'>Error al registrar</div>";
+        $stmt = $conexion->prepare("INSERT INTO usuarios (nombre_usuario, contrasena, rol) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $usuario, $password, $rol);
+        if ($stmt->execute()) {
+            $mensaje = "Usuario registrado correctamente como <strong>$rol</strong>.";
+            $tipo = "success";
+        } else {
+            $mensaje = "Error al registrar. Intenta de nuevo.";
+            $tipo = "danger";
+        }
     }
 }
 ?>
+<?php include("navbar.php"); ?>
+<div class="container">
+  <div class="card mx-auto" style="max-width: 400px;">
+    <div class="card-body">
+      <h3 class="text-center mb-3">Registro de Usuario</h3>
+      <?php if ($mensaje): ?>
+        <div class="alert alert-<?= $tipo ?> text-center"><?= $mensaje ?></div>
+      <?php endif; ?>
+      <form method="POST">
+        <div class="mb-3">
+          <label class="form-label">Nombre de usuario</label>
+          <input type="text" name="nombre_usuario" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Contraseña</label>
+          <input type="password" name="contrasena" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Rol</label>
+          <select name="rol" class="form-select" required>
+            <option value="usuario">Usuario (solo lectura)</option>
+            <option value="admin">Administrador (acceso total)</option>
+          </select>
+        </div>
+        <button type="submit" name="registrar" class="btn btn-primary w-100">Registrar</button>
+      </form>
+      <div class="text-center mt-3">
+        <a href="login.php">¿Ya tienes cuenta? Inicia sesión</a>
+      </div>
+    </div>
+  </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php include("footer.php"); ?>
