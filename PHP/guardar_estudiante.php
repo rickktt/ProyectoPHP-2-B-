@@ -1,6 +1,11 @@
 <?php
 include("conexion.php");
 
+if ($_SESSION['rol'] != 'admin') {
+    header("Location: listar_estudiantes.php");
+    exit;
+}
+
 $nombre = $_POST['nombre'];
 $apellido = $_POST['apellido'];
 $correo = $_POST['correo'];

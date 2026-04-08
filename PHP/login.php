@@ -49,6 +49,7 @@
         $row = $query->fetch_assoc();
         if ($row && password_verify($password, $row['contrasena'])) {
             $_SESSION['usuario'] = $usuario;
+            $_SESSION['rol'] = $row['rol'];
             header("Location: listar_estudiantes.php");
             exit;
         } else {

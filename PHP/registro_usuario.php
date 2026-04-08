@@ -36,6 +36,13 @@
         <label>Contraseña</label>
         <input type="password" name="contrasena" class="form-control" required>
       </div>
+      <div class="mb-3">
+        <label>Rol</label>
+        <select name="rol" class="form-control" required>
+          <option value="usuario">Usuario (Lectura)</option>
+          <option value="admin">Administrador (Acceso Total)</option>
+        </select>
+      </div>
       <button type="submit" name="registrar" class="btn btn-primary w-100">Registrar</button>
     </form>
     <div class="text-center mt-3">
@@ -47,10 +54,11 @@
 if (isset($_POST['registrar'])) {
     $usuario = $_POST['nombre_usuario'];
     $password = password_hash($_POST['contrasena'], PASSWORD_BCRYPT);
+    $rol = $_POST['rol'];
 
-    $sql = "INSERT INTO usuarios (nombre_usuario, contrasena) VALUES ('$usuario', '$password')";
+    $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, rol) VALUES ('$usuario', '$password', '$rol')";
     if ($conexion->query($sql)) {
-        echo "<div class='alert alert-success mt-3 text-center'>Usuario registrado correctamente</div>";
+        echo "<div class='alert alert-success mt-3 text-center'>Usuario registrado correctamente como $rol</div>";
     } else {
         echo "<div class='alert alert-danger mt-3 text-center'>Error al registrar</div>";
     }

@@ -30,9 +30,12 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 $resultado = $conexion->query("SELECT * FROM estudiantes");
+$rol = $_SESSION['rol'];
 ?>
-<h2 class="mb-4">Lista de Estudiantes</h2>
-<a href="registro.php" class="btn btn-primary mb-3">Registrar Estudiante</a>
+<h2 class="mb-4">Lista de Medicinas</h2>
+<?php if ($rol == 'admin'): ?>
+  <a href="registro.php" class="btn btn-primary mb-3">Registrar Medicamento</a>
+<?php endif; ?>
 
 <table class="table table-bordered table-striped">
   <thead class="table-dark">
@@ -54,8 +57,12 @@ $resultado = $conexion->query("SELECT * FROM estudiantes");
       <td><?= $fila['correo'] ?></td>
       <td><?= $fila['edad'] ?></td>
       <td>
-        <a href="editar_estudiante.php?id=<?= $fila['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
-        <a href="eliminar_estudiante.php?id=<?= $fila['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar este registro?');">Eliminar</a>
+        <?php if ($rol == 'admin'): ?>
+          <a href="editar_estudiante.php?id=<?= $fila['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
+          <a href="eliminar_estudiante.php?id=<?= $fila['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar este registro?');">Eliminar</a>
+        <?php else: ?>
+          <span class="badge bg-secondary">Solo Lectura</span>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endwhile; ?>

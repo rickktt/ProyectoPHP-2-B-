@@ -29,8 +29,12 @@ if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit;
 }
+if ($_SESSION['rol'] != 'admin') {
+    header("Location: listar_estudiantes.php");
+    exit;
+}
 ?>
-<h2>Registrar Estudiante</h2>
+<h2>Registrar Medicamento</h2>
 <form action="guardar_estudiante.php" method="POST" class="card p-4">
   <div class="mb-3">
     <label>Nombre</label>

@@ -35,6 +35,10 @@
           header("Location: login.php");
           exit;
       }
+      if ($_SESSION['rol'] != 'admin') {
+          header("Location: listar_estudiantes.php");
+          exit;
+      }
       $id = $_GET['id'];
       $resultado = $conexion->query("SELECT * FROM estudiantes WHERE id=$id");
       $estudiante = $resultado->fetch_assoc();
